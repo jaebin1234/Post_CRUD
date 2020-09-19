@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:replace="fragments/common :: head('Hello, Contact Health Manager!')">
+<head th:replace="fragments/common :: head('운동 시설 게시판')">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,15 +8,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link href="../static/css/starter-template.css" th:href="@{/starter-template.css}" rel="stylesheet">
+    <link href="../../static/css/starter-template.css" th:href="@{/starter-template.css}" rel="stylesheet">
 
-    <title>Hello, Contact Health Manager!</title>
+    <title>운동 시설 게시판</title>
 
 </head>
 <body>
 
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:replace="fragments/common.html :: menu('home')">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:replace="fragments/common.html :: menu('board')">
     <a class="navbar-brand" href="#">컨헬</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,23 +39,39 @@
     </div>
 </nav>
 
-<main role="main" class="container">
 
-    <div class="starter-template">
-        <h1>우리 동네 운동 시설은 어디? Contact Health Manager </h1>
-        <br>
-        <br>
-        <p class="lead">인기 운동 시설, 주변 운동 시설 , 나와 맞는 헬스 매니저 1:1 상담 까지 , 가깝고 따뜻한 당신의 근처를 만드세요 </p>
-    </div>
+<div class="container">
+    <h2> 운동 시설 게시물 </h2>
+    <form action="#" th:action="@{/board/form}" th:object="${board}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="title">제목</label>
+            <input type="text" class="form-control"
+                   th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'" id="title" th:field="*{title}">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                제목 에러 메시지
+            </div>
+        </div>
 
-    <hr>
-    <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
-    <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
-    <a sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
-    <a sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/user/info}">내정보</a>
-    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">어드민</a>
+        <div class="form-group">
+            <label for="content">글 내용</label>
+            <textarea class="form-control"
+                      th:classappend="${#fields.hasErrors('content')} ? 'is-invalid'" id="content" rows="3"
+                      th:field="*{content}"></textarea>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">
+                내용 에러 메시지
+            </div>
+        </div>
 
-</main>
+        <div class="text-right">
+            <button type="submit" class="btn btn-outline-primary">확인</button>
+            <a type="button" class="btn btn-outline-primary" th:href="@{/board/list}">취소</a>
+
+        </div>
+    </form>
+
+</div>
+
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
