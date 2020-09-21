@@ -1,7 +1,7 @@
 package com.example.signuplogin.service;
 
 
-import com.example.signuplogin.domain.Role;
+import com.example.signuplogin.domain.Rolee;
 import com.example.signuplogin.domain.entity.MemberEntity;
 import com.example.signuplogin.domain.repository.MemberRepository;
 import com.example.signuplogin.dto.MemberDto;
@@ -42,9 +42,9 @@ public class MemberService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         if (("admin@example.com").equals(userEmail)) {
-            authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
+            authorities.add(new SimpleGrantedAuthority(Rolee.ADMIN.getValue()));
         } else {
-            authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
+            authorities.add(new SimpleGrantedAuthority(Rolee.MEMBER.getValue()));
         }
 
         return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
